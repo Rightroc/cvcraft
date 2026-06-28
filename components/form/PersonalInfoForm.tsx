@@ -9,8 +9,9 @@ const schema = z.object({
   fullName: z.string().min(3, "Full name is required"),
   email: z.string().email("Enter a valid email"),
   phone: z.string().min(10, "Phone number is too short"),
-  linkedIn: z.string().url("Enter a valid LinkedIn profile URL"),
-  "portfolio/Website": z.string().url("Enter a valid portfolio/website URL"),
+  linkedIn: z.string().url("Enter a valid LinkedIn profile URL").optional(),
+  "portfolio/Website": z.string().url("Enter a valid portfolio/website URL").optional,
+  "github profile": z.string().url("Enter a valid GitHub profile URL").optional,
   address: z.string().min(3, "Address is required"),
   title: z.string().min(2, "Professional title is required"),
 });
@@ -73,6 +74,14 @@ export default function PersonalInfoForm() {
         placeholder="https://www.portfolio/Website.com"
         register={register("portfolio/Website")}
         error={errors["portfolio/Website"]?.message}
+      />
+
+      <Input
+        label="github profile"
+        type="url"
+        placeholder="https://www.github.com/yourprofile"
+        register={register("github profile")}
+        error={errors["github profile"]?.message}
       />
 
       <Input
