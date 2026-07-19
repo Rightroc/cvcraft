@@ -7,6 +7,10 @@ import EducationForm from "@/components/form/EducationForm";
 import CVPreview from "@/components/cv/CVPreview";
 import { formSteps } from "@/data/formSteps";
 import { defaultCV } from "@/data/defaultCV";
+import SummaryForm from "@/components/form/SummaryForm";
+import ExperienceForm from "@/components/form/ExperienceForm";
+import SkillsForm from "@/components/form/SkillsForm";
+import RefereeForm from "@/components/form/RefereeForm";
 
 export default function BuilderPage() {
   const [currentStep] = useState(1);
@@ -22,13 +26,36 @@ export default function BuilderPage() {
             totalSteps={formSteps.length}
           />
 
-          <div className="mt-8" space-y-10>
+          <div className="mt-8 space-y-10">
             <PersonalInfoForm
               cvData={cvData}
               setCvData={setCvData}
             />
 
-            <EducationForm />
+            <SummaryForm
+              cvData={cvData}
+              setCvData={setCvData}
+            />
+
+            <EducationForm
+              cvData={cvData}
+              setCvData={setCvData}
+            />
+
+            <ExperienceForm
+              cvData={cvData}
+              setCvData={setCvData}
+            />
+            <SkillsForm
+              cvData={cvData}
+              setCvData={setCvData}
+            />
+
+            <RefereeForm
+              cvData={cvData}
+              setCvData={setCvData}
+            />
+
           </div>
         </div>
 

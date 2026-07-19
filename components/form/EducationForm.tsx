@@ -1,19 +1,17 @@
 "use client";
 
-import { useState } from "react";
 import Input from "@/components/ui/Input";
 
-export default function EducationForm() {
-  const [education, setEducation] = useState([
-    {
-      school: "",
-      degree: "",
-      course: "",
-      startYear: "",
-      endYear: "",
-      current: false,
-    },
-  ]);
+interface Props {
+  cvData: any;
+  setCvData: React.Dispatch<React.SetStateAction<any>>;
+}
+
+export default function EducationForm({
+  cvData,
+  setCvData,
+}: Props) {
+  const education = cvData.education;
 
   const handleChange = (
     index: number,
@@ -22,7 +20,11 @@ export default function EducationForm() {
   ) => {
     const updated = [...education];
     (updated[index] as any)[field] = value;
-    setEducation(updated);
+
+    setCvData((prev: any) => ({
+      ...prev,
+      education: updated,
+    }));
   };
 
   const handleCurrentChange = (
@@ -30,33 +32,43 @@ export default function EducationForm() {
     checked: boolean
   ) => {
     const updated = [...education];
+
     updated[index].current = checked;
 
     if (checked) {
       updated[index].endYear = "";
     }
 
-    setEducation(updated);
+    setCvData((prev: any) => ({
+      ...prev,
+      education: updated,
+    }));
   };
 
   const addEducation = () => {
-    setEducation([
-      ...education,
-      {
-        school: "",
-        degree: "",
-        course: "",
-        startYear: "",
-        endYear: "",
-        current: false,
-      },
-    ]);
+    setCvData((prev: any) => ({
+      ...prev,
+      education: [
+        ...prev.education,
+        {
+          school: "",
+          degree: "",
+          course: "",
+          startYear: "",
+          endYear: "",
+          current: false,
+        },
+      ],
+    }));
   };
 
   const removeEducation = (index: number) => {
-    setEducation(
-      education.filter((_, i) => i !== index)
-    );
+    setCvData((prev: any) => ({
+      ...prev,
+      education: prev.education.filter(
+        (_: any, i: number) => i !== index
+      ),
+    }));
   };
 
   return (
@@ -65,7 +77,7 @@ export default function EducationForm() {
         Education
       </h2>
 
-      {education.map((item, index) => (
+      {education.map((item: any, index: number) => (
         <div
           key={index}
           className="space-y-4 rounded-xl border p-6 shadow-sm"
