@@ -1,0 +1,11 @@
+[33m68ee468[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m feat: add multi-step form navigation
+[33md9d7cd2[m feat: add multi-step CV builder and PDF export
+[33mf742081[m feat: add CV PDF export
+[33mb663b5d[m feat: build dynamic education form
+[33md6ba70d[m feat: implement live CV preview
+[33m7f1f998[m feat: add optional professional profile fields
+[33mb7adab9[m feat: implement personal information form with validation
+[33m05cf92f[m feat: implement personal information form with validation
+[33m0a3dbc4[m feat: create landing page and initialize CV builder structure
+[33m1f06378[m Initial Next.js project setup
+[33mb4f8a6a[m Initial commit from Create Next App
