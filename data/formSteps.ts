@@ -5,5 +5,4 @@ export const formSteps = [
   "Experience",
   "Skills",
   "Referees",
-  "Preview",
 ];

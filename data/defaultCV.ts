@@ -1,4 +1,6 @@
-export const defaultCV = {
+import type { CVData } from "@/types/cv";
+
+export const defaultCV: CVData = {
   personal: {
     fullName: "",
     email: "",

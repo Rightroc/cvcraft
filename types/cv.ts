@@ -2,9 +2,11 @@ export interface PersonalInfo {
   fullName: string;
   email: string;
   phone: string;
+  linkedIn?: string;
+  portfolio?: string;
+  github?: string;
   address: string;
   title: string;
-  summary: string;
 }
 
 export interface Education {
@@ -13,6 +15,7 @@ export interface Education {
   course: string;
   startYear: string;
   endYear: string;
+  current?: boolean;
 }
 
 export interface Experience {
@@ -20,25 +23,21 @@ export interface Experience {
   position: string;
   startDate: string;
   endDate: string;
-  responsibilities: string;
-}
-
-export interface Skill {
-  technical: string[];
-  soft: string[];
+  current?: boolean;
+  description: string;
 }
 
 export interface Referee {
   name: string;
-  position: string;
   phone: string;
-  email: string;
+  relationship: string;
 }
 
 export interface CVData {
   personal: PersonalInfo;
+  summary: string;
   education: Education[];
   experience: Experience[];
-  skills: Skill;
-  referee: Referee[];
+  skills: string[];
+  referees: Referee[];
 }

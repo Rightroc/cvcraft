@@ -1,89 +1,32 @@
 "use client";
 
-import { useRef, useState } from "react";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
+import { useRef } from "react";
+import { useReactToPrint } from "react-to-print";
+import type { CVData } from "@/types/cv";
 
 interface Props {
-  data: any;
+  data: CVData;
 }
 
 export default function CVPreview({ data }: Props) {
   const person = data.personal;
 
   const cvRef = useRef<HTMLDivElement>(null);
-  const [isGenerating, setIsGenerating] = useState(false);
 
-  const downloadPDF = async () => {
-    if (!cvRef.current) return;
-
-    setIsGenerating(true);
-
-    const canvas = await html2canvas(cvRef.current, {
-      scale: 2,
-      onclone: (document) => {
-        const elements = document.querySelectorAll("*");
-
-        elements.forEach((element) => {
-          const htmlElement = element as HTMLElement;
-
-          const style = window.getComputedStyle(htmlElement);
-
-          if (style.color.includes("lab")) {
-            htmlElement.style.color = "#111827";
-          }
-
-          if (style.backgroundColor.includes("lab")) {
-            htmlElement.style.backgroundColor = "#ffffff";
-          }
-
-          if (style.borderColor.includes("lab")) {
-            htmlElement.style.borderColor = "#d1d5db";
-          }
-        });
-      },
-    });
-
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "mm",
-      format: "a4",
-    });
-
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-
-    const pdfHeight =
-      (canvas.height * pdfWidth) / canvas.width;
-
-    pdf.addImage(
-      imgData,
-      "PNG",
-      0,
-      0,
-      pdfWidth,
-      pdfHeight
-    );
-
-    pdf.save(
-      `${person.fullName || "my-cv"}.pdf`
-    );
-    setIsGenerating(false);
-  };
+  const handlePrint = useReactToPrint({
+    contentRef: cvRef,
+    documentTitle: `${person.fullName || "My CV"}`,
+  });
 
   return (
     <>
       {/* Download Button */}
       <div className="mb-5 flex justify-end">
         <button
-          onClick={downloadPDF}
-          disabled={isGenerating}
-          className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={handlePrint}
+          className="no-print rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow transition hover:bg-blue-700"
         >
-          {isGenerating
-            ? "Generating PDF..."
-            : "Download CV PDF"}
+          Export / Print CV
         </button>
       </div>
 
@@ -91,13 +34,13 @@ export default function CVPreview({ data }: Props) {
       {/* CV AREA */}
       <div
         ref={cvRef}
-        className="relative sticky top-8 mx-auto min-h-[1123px] w-full max-w-[794px] rounded-xl border border-gray-200 bg-white p-10 shadow-2xl"
+        className="cv-page relative mx-auto lg:sticky lg:top-8 min-h-[1123px] w-full max-w-[794px] rounded-xl border border-gray-200 bg-white p-10 shadow-2xl"
       >
 
         {/* Watermark */}
         <div id="cv-watermark" 
         className="absolute right-8 top-8 text-xs font-semibold uppercase tracking-widest text-gray-300">
-          CV Builder
+          CVcraft
         </div>
 
 
@@ -107,8 +50,8 @@ export default function CVPreview({ data }: Props) {
             {person.fullName || "Your Name"}
           </h1>
 
-          <p className="mt-3 text-lg font-medium uppercase tracking-[0.2em] text-blue-600">
-            {person.title || "Professional Title"}
+          <p className="mt-6 grid gap-3 text-sm text-slate-700 md:grid-cols-2">
+            {person.title || "Software Engineer"}
           </p>
 
 
@@ -125,7 +68,7 @@ export default function CVPreview({ data }: Props) {
 
         {/* Summary */}
         {data.summary && (
-          <section className="mt-10">
+          <section className="mt-8">
             <h2 className="border-b-2 border-blue-600 pb-2 text-xl font-bold uppercase tracking-widest text-slate-900">
               Professional Summary
             </h2>
@@ -144,7 +87,7 @@ export default function CVPreview({ data }: Props) {
             edu.degree ||
             edu.course
         ) && (
-          <section className="mt-10">
+          <section className="mt-8">
 
             <h2 className="border-b-2 border-blue-600 pb-2 text-xl font-bold uppercase tracking-widest text-slate-900">
               Education
@@ -205,7 +148,7 @@ export default function CVPreview({ data }: Props) {
             exp.position
         ) && (
 
-          <section className="mt-10">
+          <section className="mt-8">
 
             <h2 className="border-b-2 border-blue-600 pb-2 text-xl font-bold uppercase tracking-widest text-slate-900">
               Experience
@@ -267,7 +210,7 @@ export default function CVPreview({ data }: Props) {
           (skill:string)=>skill.trim() !== ""
         ) && (
 
-          <section className="mt-10">
+          <section className="mt-8">
 
             <h2 className="border-b-2 border-blue-600 pb-2 text-xl font-bold uppercase tracking-widest text-slate-900">
               Skills
@@ -308,7 +251,7 @@ export default function CVPreview({ data }: Props) {
             ref.relationship
         ) && (
 
-        <section className="mt-10">
+        <section className="mt-8">
 
           <h2 className="border-b-2 border-blue-600 pb-2 text-xl font-bold uppercase tracking-widest text-slate-900">
             Referees
@@ -350,6 +293,10 @@ export default function CVPreview({ data }: Props) {
         </section>
 
         )}
+
+        <div className="no-print mt-12 border-t pt-5 text-center text-xs text-gray-400">
+          Created with CVCraft
+        </div>
 
       </div>
     </>
