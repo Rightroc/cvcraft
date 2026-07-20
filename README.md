@@ -67,9 +67,11 @@ types/
 
 ---
 
-## Screenshots
+## Live Demo
 
-Coming soon.
+Try the application here:
+
+👉 https://cvcraft-rightrocs-projects.vercel.app/
 
 ---
 
