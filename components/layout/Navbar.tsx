@@ -7,7 +7,7 @@ export default function Navbar() {
         </h1>
 
         <button className="rounded-lg bg-blue-600 px-5 py-2 font-medium text-white transition hover:bg-blue-700">
-          Get Started
+          no sign up required😊😉😊
         </button>
       </div>
     </nav>

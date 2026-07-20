@@ -3,6 +3,8 @@
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import type { CVData } from "@/types/cv";
+import ExportMenu from "@/components/ui/ExportMenu";
+import { exportWord } from "@/lib/exportWord";
 
 interface Props {
   data: CVData;
@@ -18,18 +20,18 @@ export default function CVPreview({ data }: Props) {
     documentTitle: `${person.fullName || "My CV"}`,
   });
 
+  const handleWordExport = async () => {
+    // generate .docx here
+  };
+
   return (
     <>
-      {/* Download Button */}
-      <div className="mb-5 flex justify-end">
-        <button
-          onClick={handlePrint}
-          className="no-print rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow transition hover:bg-blue-700"
-        >
-          Export / Print CV
-        </button>
+      <div className="mb-5 flex justify-end items-start">
+        <ExportMenu
+          onPdf={handlePrint}
+          onWord={() => exportWord(data)}
+        />
       </div>
-
 
       {/* CV AREA */}
       <div

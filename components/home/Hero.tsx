@@ -40,7 +40,7 @@ export default function Hero() {
           </Link>
 
           <button className="rounded-xl border px-8 py-4 font-semibold hover:bg-gray-100">
-            View Templates
+            View Templates coming soon...
           </button>
         </motion.div>
       </div>
